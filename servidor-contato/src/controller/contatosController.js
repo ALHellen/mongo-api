@@ -14,7 +14,6 @@ const getAll = (request, response) => {
 };
 
 const add = (request, response) => {
-  console.log('passou aqui')
   const contatoDoBody = request.body
   const contato = new contatosCollection(contatoDoBody)
 
@@ -28,10 +27,38 @@ const add = (request, response) => {
   })
 }
 
-// const getById = (request, response) => {
-//   const id = request.params.id;
-//   response.status(200).send(contatos.find(tarefa => tarefa.id == id));
-// };
+const getByNome = (request, response) => {
+  console.log("i'm here")
+  const nomeParam = request.params.nome;
+  const regex = new RegExp(nomeParam)
+  const filtro = {nome: regex}
+
+  contatosCollection.find(filtro, (error, contatos) => {
+    if(error){
+      return response.status(500).send(error)
+    }
+    else{
+      return response.status(201).send(contatos)
+    }
+  });
+};
+
+const getById = (request, response) => {
+  console.log("i'm here too")
+  const idParam = request.params.id;
+
+  contatosCollection.findById(idParam, (error, contato) => {
+    if(error){
+      return response.status(500).send(error)
+    } else{
+    if(contato){
+      return response.status(200).send(contato)
+    }
+    else{
+      return response.status(404).send('contato não encontrado')
+    }}
+  });
+};
 
 // const add = (request, response) => {
 //   let contato = request.body
@@ -116,6 +143,8 @@ const add = (request, response) => {
 
 module.exports = {
   getAll,
-  add
+  add,
+  getByNome,
+  getById  
   // adicionaContato
 }
