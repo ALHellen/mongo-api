@@ -60,6 +60,24 @@ const getById = (request, response) => {
   });
 };
 
+const deleteById = (request,response) => {
+  console.log("here")
+  const idParam = request.params.id
+  contatosCollection.findByIdAndDelete(idParam, (error, contato) => {
+    if(error){
+      return response.status(500).send(error)
+    }
+    else{
+      if(contato){
+      return response.status(200).send('deletado')
+    }
+    else{
+      return response.status(404).send(404)
+    }
+  }
+  })}
+  
+
 // const add = (request, response) => {
 //   let contato = request.body
 //   contato.id = Math.random().toString(36).substr(-8)
@@ -145,6 +163,6 @@ module.exports = {
   getAll,
   add,
   getByNome,
-  getById  
-  // adicionaContato
+  getById,
+  deleteById
 }
