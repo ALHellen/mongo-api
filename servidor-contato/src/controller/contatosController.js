@@ -76,6 +76,27 @@ const deleteById = (request,response) => {
     }
   }
   })}
+
+  const updateById = (request,response) => {
+    console.log("update")
+    const idParam = request.params.id
+    const contatoDoBody = request.body
+    const options = {new: true}
+    
+    contatosCollection.findByIdAndUpdate(idParam, contatoDoBody, options, (error, contato) => {
+      if(error){
+        return response.status(500).send(error)
+      }
+      else{
+        if(contato){
+        return response.status(200).send(contato)
+      }
+      else{
+        return response.status(404).send(404)
+      }
+    }
+    })
+  }
   
 
 // const add = (request, response) => {
@@ -164,5 +185,6 @@ module.exports = {
   add,
   getByNome,
   getById,
-  deleteById
+  deleteById,
+  updateById
 }

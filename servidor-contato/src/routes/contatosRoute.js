@@ -8,6 +8,7 @@ router.get("/nome/:nome", controller.getByNome)
 router.get("/id/:id", controller.getById)
 router.post("/criar", bodyParser.json(), controller.add)
 router.delete("/delete/:id", controller.deleteById)
+router.patch("/patch/:id", bodyParser.json(),controller.updateById)
 
 
 module.exports = router
